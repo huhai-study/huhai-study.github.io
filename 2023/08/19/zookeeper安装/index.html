@@ -7,16 +7,25 @@
 <meta name="full-screen" content="yes">
 <meta name="theme-color" content="#317EFB" />
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
-<meta property="og:type" content="website">
-<meta property="og:title" content="胡Sir的Blog">
-<meta property="og:url" content="http://example.com/archives/2023/07/index.html">
+<meta name="description" content="1.1 下载安装1、环境准备 ZooKeeper服务器是用Java创建的，它运行在JVM之上。需要安装JDK 7或更高版本。 2、上传 将下载的ZooKeeper放到&#x2F;opt&#x2F;ZooKeeper目录下 123456789#上传zookeeper alt+pput f:&#x2F;setup&#x2F;apache-zookeeper-3.5.6-bin.tar.gz#打开 opt目录cd &#x2F;opt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zookeeper安装">
+<meta property="og:url" content="http://example.com/2023/08/19/zookeeper%E5%AE%89%E8%A3%85/index.html">
 <meta property="og:site_name" content="胡Sir的Blog">
+<meta property="og:description" content="1.1 下载安装1、环境准备 ZooKeeper服务器是用Java创建的，它运行在JVM之上。需要安装JDK 7或更高版本。 2、上传 将下载的ZooKeeper放到&#x2F;opt&#x2F;ZooKeeper目录下 123456789#上传zookeeper alt+pput f:&#x2F;setup&#x2F;apache-zookeeper-3.5.6-bin.tar.gz#打开 opt目录cd &#x2F;opt">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2023-08-19T02:49:24.000Z">
+<meta property="article:modified_time" content="2023-08-19T03:04:57.571Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
 
 
-<title >胡Sir的Blog</title>
+<title >zookeeper安装</title>
 
 <!-- Favicon -->
 
@@ -58,7 +67,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"John Doe","root":"/","typed_text":null,"theme_version":"2.0.9","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"https://gcore.jsdelivr.net/gh/huhai-study/picgo-one@main/img/123.png","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)Hey! Good again!","hideText":"(●—●)Oh, crash!"},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms","author":"Post author: ","copyright_link":"Post link: ","copyright_license_title":"Copyright Notice: ","copyright_license_content":"All articles in this blog are licensed under undefined unless otherwise stated.","copy_success":"Copied","copy_failure":"Copy failed","open_read_mode":"Enter reading mode","exit_read_mode":"Exit reading mode","notice_outdate_message":"It has been undefined days since the last update, the content of the article may be outdated.","just":"Just","min":"minutes ago","hour":"hours ago","day":"days ago","month":"months ago"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":false,"isHome":false,"postUpdate":"2023-08-19 11:05:27"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2023-08-19 11:04:57"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.0.9" id="trm-switch-style">
@@ -185,7 +194,8 @@
             <!-- top bar end -->
 
             <!-- body -->
-            <div class="trm-content-start">
+            
+<div class="trm-content-start">
     <!-- banner -->
     <div class="trm-banner" data-scroll data-scroll-direction="vertical">
     
@@ -206,10 +216,10 @@
                     <!-- banner title -->
                     <div class="trm-banner-text ">
                         <div class="trm-label trm-mb-20">
-                            The article archive
+                            NEWS LETTER
                         </div>
                         <h1 class="trm-mb-30 trm-hsmb-font">
-                            云间连下榻，<br>天上接行杯。
+                            zookeeper安装
                         </h1>
 
                         
@@ -219,7 +229,7 @@
                                 </li>
                                 <li>
                                     <span>
-                                        archives
+                                        2023
                                     </span
                                 ></li>
                             </ul>
@@ -311,125 +321,110 @@
                 <div class="trm-content" id="trm-content">
                     <div data-scroll data-scroll-repeat data-scroll-offset="500" id="about-triger"></div>
 
-                    <div class="row">
-    <div class="col-lg-12">
-        <div class="trm-card">
-            <div style="padding: 0 20px;">
-                
-                    <ul class="row trm-list" style="margin-bottom: 0px;"><li class="col-lg-4 trm-list-item" style="margin: 6px 0;"><a class="archive-list-link" href="/archives/2023/">2023</a><span class="archive-list-count">（12）</span></li></ul>
-                
-            </div>
+                    <div id="post-info" class="row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            08/19
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            10:49
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            John Doe
         </div>
     </div>
 </div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h2 id="1-1-下载安装"><a href="#1-1-下载安装" class="headerlink" title="1.1 下载安装"></a>1.1 下载安装</h2><p><strong>1、环境准备</strong></p>
+<p>ZooKeeper服务器是用Java创建的，它运行在JVM之上。需要安装JDK 7或更高版本。</p>
+<p><strong>2、上传</strong></p>
+<p>将下载的ZooKeeper放到&#x2F;opt&#x2F;ZooKeeper目录下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">上传zookeeper alt+p</span></span><br><span class="line">put f:/setup/apache-zookeeper-3.5.6-bin.tar.gz</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">打开 opt目录</span></span><br><span class="line">cd /opt</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">创建zooKeeper目录</span></span><br><span class="line">mkdir  zooKeeper</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">将zookeeper安装包移动到 /opt/zooKeeper</span></span><br><span class="line">mv apache-zookeeper-3.5.6-bin.tar.gz /opt/zookeeper/</span><br></pre></td></tr></table></figure>
 
-<!-- history -->
+<p><strong>3、解压</strong></p>
+<p>将tar包解压到&#x2F;opt&#x2F;zookeeper目录下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf apache-ZooKeeper-3.5.6-bin.tar.gz </span><br></pre></td></tr></table></figure>
 
-<div class="row">
+<h2 id="1-2-配置启动"><a href="#1-2-配置启动" class="headerlink" title="1.2 配置启动"></a>1.2 配置启动</h2><p><strong>1、配置zoo.cfg</strong></p>
+<p>进入到conf目录拷贝一个zoo_sample.cfg并完成配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">进入到conf目录</span></span><br><span class="line">cd /opt/zooKeeper/apache-zooKeeper-3.5.6-bin/conf/</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">拷贝</span></span><br><span class="line">cp  zoo_sample.cfg  zoo.cfg</span><br></pre></td></tr></table></figure>
+
+
+
+<p>修改zoo.cfg</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">打开目录</span></span><br><span class="line">cd /opt/zooKeeper/</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">创建zooKeeper存储目录</span></span><br><span class="line">mkdir  zkdata</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">修改zoo.cfg</span></span><br><span class="line">vim /opt/zooKeeper/apache-zooKeeper-3.5.6-bin/conf/zoo.cfg</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gcore.jsdelivr.net/gh/huhai-study/picgo-one@main/img/20230819105858.png" alt="20230819105858" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>修改存储目录：dataDir&#x3D;&#x2F;opt&#x2F;zookeeper&#x2F;zkdata</p>
+<p><strong>2、启动ZooKeeper</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/zooKeeper/apache-zooKeeper-3.5.6-bin/bin/</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">启动</span></span><br><span class="line"> ./zkServer.sh  start</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gcore.jsdelivr.net/gh/huhai-study/picgo-one@main/img/20230819105926.png" alt="20230819105926" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>看到上图表示ZooKeeper成功启动</p>
+<p><strong>3、查看ZooKeeper状态</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./zkServer.sh status</span><br></pre></td></tr></table></figure>
+
+<p>zookeeper启动成功。standalone代表zk没有搭建集群，现在是单节点</p>
+<p><img src="https://gcore.jsdelivr.net/gh/huhai-study/picgo-one@main/img/20230819105944.png" alt="20230819105944" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>zookeeper没有启动<br><img src="https://gcore.jsdelivr.net/gh/huhai-study/picgo-one@main/img/20230819110100.png" alt="20230819110100" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+
+</article>
+    
+    
+
+</div>
+<div id="post-next-prev" class="row">
     <div class="col-lg-12">
         <!-- title -->
         <h5 class="trm-title-with-divider">
-            
-                Archive for 2023
-            
-            <span data-number="01"></span>
+            Other Articles
+            <span data-number="02"></span>
         </h5>
     </div>
-    <div class="col-lg-12">
-        <!-- timeline -->
-        <div class="trm-timeline">
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2023/08/15/SpringCloud%E7%9A%84%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="trm-cover-frame trm-anima-link">
             
-            <div class="trm-timeline-item trm-scroll-animation" data-scroll data-scroll-offset="40">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-a trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2023/07/21/Redis%E9%9B%86%E7%BE%A4/" class="trm-anima-link">
-                                        Redis集群
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">07/21</li>
-                                        <li class="trm-accent-color">15:24</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
+            
+                <img alt="cover" class="no-fancybox" src="https://gcore.jsdelivr.net/gh/huhai-study/picgo-one@main/img/httpsgcore.jsdelivr.netghhuhai-studypicgo-one@mainimg20230815161410.png.png">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/SpringCloud/">
+                    SpringCloud
+                </a>
             </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation" data-scroll data-scroll-offset="40">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-a trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2023/07/20/sentinel%E8%A7%84%E5%88%99%E6%8C%81%E4%B9%85%E5%8C%96/" class="trm-anima-link">
-                                        sentinel规则持久化
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">07/20</li>
-                                        <li class="trm-accent-color">18:41</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation" data-scroll data-scroll-offset="40">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-a trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2023/07/05/Nacos%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/" class="trm-anima-link">
-                                        Nacos安装指南
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">07/05</li>
-                                        <li class="trm-accent-color">15:28</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
+            <h5>
+                <a href="/2023/08/15/SpringCloud%E7%9A%84%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="trm-anima-link">
+                    SpringCloud父工程的搭建
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>23/08/15</li>
+                <li>14:38</li>
+                
+                
+            </ul>
         </div>
-        <!-- timeline end -->
     </div>
 </div>
+    
+</div>
 
-<!-- history end -->
-
-
-    <div class="trm-pagination">
-        <span class="page-number current">1</span>
-    </div>
-
-
+    
 
 
 
@@ -472,6 +467,10 @@
 
             <div class="trm-fixed-container" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="-10">
     
+        <div class="trm-fixed-btn" data-title="Read Mode" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
     
     <div id="trm-back-top" class="trm-fixed-btn" data-title="Back To Top">
         <i class="iconfont fas fa-arrow-up"></i>
@@ -508,6 +507,10 @@
     
 
     <!-- 评论插件 -->
+    
+        
+
+        
     
 
 
