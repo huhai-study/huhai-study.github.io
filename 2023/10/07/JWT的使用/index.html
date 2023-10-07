@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="10. pd-tools-jwtpd-tools-jwt模块的定位是对于jwt令牌相关操作进行封装，为认证、鉴权提供支撑。 提供的功能：生成jwt token、解析jwt token 10.1 认证机制介绍10.1.1 HTTP Basic AuthHTTP Basic Auth 是一种简单的登录认证方式，Web浏览器或其他客户端程序在请求时提供用户名和密码，通常用户名和密码会通过HTTP头传递。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JWT的使用">
+<meta property="og:url" content="http://example.com/2023/10/07/JWT%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="胡Sir的Blog">
+<meta property="og:description" content="10. pd-tools-jwtpd-tools-jwt模块的定位是对于jwt令牌相关操作进行封装，为认证、鉴权提供支撑。 提供的功能：生成jwt token、解析jwt token 10.1 认证机制介绍10.1.1 HTTP Basic AuthHTTP Basic Auth 是一种简单的登录认证方式，Web浏览器或其他客户端程序在请求时提供用户名和密码，通常用户名和密码会通过HTTP头传递。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2023-10-07T07:38:05.000Z">
+<meta property="article:modified_time" content="2023-10-07T08:59:27.754Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
+
+
+<title >JWT的使用</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.0.9' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.0.9' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"John Doe","root":"/","typed_text":null,"theme_version":"2.0.9","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"https://gcore.jsdelivr.net/gh/huhai-study/picgo-one@main/img/123.png","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)Hey! Good again!","hideText":"(●—●)Oh, crash!"},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms","author":"Post author: ","copyright_link":"Post link: ","copyright_license_title":"Copyright Notice: ","copyright_license_content":"All articles in this blog are licensed under undefined unless otherwise stated.","copy_success":"Copied","copy_failure":"Copy failed","open_read_mode":"Enter reading mode","exit_read_mode":"Exit reading mode","notice_outdate_message":"It has been undefined days since the last update, the content of the article may be outdated.","just":"Just","min":"minutes ago","hour":"hours ago","day":"days ago","month":"months ago"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2023-10-07 16:59:27"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.0.9" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" data-scroll-container style="opacity: 0">
+          <div data-scroll-section id="content" class="trm-scroll-section">
+
+            <div class="locomotive-scroll__sticky-target" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none;"></div>
+
+            <!-- top bar -->
+            <header class="trm-top-bar" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="-10">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="https://gcore.jsdelivr.net/gh/huhai-study/picgo-one@main/img/123.png">
+    
+    
+        <div class="trm-logo-text">
+            胡<span>Sir</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    Home
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    Archives
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner" data-scroll data-scroll-direction="vertical">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" data-scroll data-scroll-direction="vertical" data-scroll-speed="-3" src="https://gcore.jsdelivr.net/gh/huhai-study/picgo-one@main/img/IMG_8958(1).jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container" data-scroll data-scroll-direction="vertical" data-scroll-speed="0">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            JWT的使用
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2023
+                                    </span
+                                ></li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <a href="#about-triger" data-scroll-to="#about-triger" data-scroll-offset="-130" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </a>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div id="page-sidebar" class="col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    
+
+<div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card" data-scroll data-scroll-repeat data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="60"> 
+    
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="https://gcore.jsdelivr.net/gh/huhai-study/picgo-one@main/img/IMG_9026.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        HH2
+    </h5>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/huhai-study" title="github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                Residence:
+            </div>
+            <div class="trm-label trm-label-light">
+                Mars
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:2378294206@qq.com" class="trm-btn">
+            Contact Me
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div id="page-content" class="col-lg-8">
+                <div class="trm-content" id="trm-content">
+                    <div data-scroll data-scroll-repeat data-scroll-offset="500" id="about-triger"></div>
+
+                    <div id="post-info" class="row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            10/07
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            15:38
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            John Doe
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h2 id="10-pd-tools-jwt"><a href="#10-pd-tools-jwt" class="headerlink" title="10. pd-tools-jwt"></a>10. pd-tools-jwt</h2><p>pd-tools-jwt模块的定位是对于jwt令牌相关操作进行封装，为认证、鉴权提供支撑。</p>
+<p>提供的功能：生成jwt token、解析jwt token</p>
+<h3 id="10-1-认证机制介绍"><a href="#10-1-认证机制介绍" class="headerlink" title="10.1 认证机制介绍"></a>10.1 认证机制介绍</h3><h4 id="10-1-1-HTTP-Basic-Auth"><a href="#10-1-1-HTTP-Basic-Auth" class="headerlink" title="10.1.1 HTTP Basic Auth"></a>10.1.1 HTTP Basic Auth</h4><p>HTTP Basic Auth 是一种简单的登录认证方式，Web浏览器或其他客户端程序在请求时提供用户名和密码，通常用户名和密码会通过HTTP头传递。简单点说就是每次请求时都提供用户的username和password</p>
+<p>这种方式是先把用户名、冒号、密码拼接起来，并将得出的结果字符串用Base64算法编码。</p>
+<p>例如，提供的用户名是 <code>bill</code> 、口令是 <code>123456</code> ，则拼接后的结果就是 <code>bill:123456</code> ，然后再将其用Base64编码，得到 <code>YmlsbDoxMjM0NTY=</code> 。最终将Base64编码的字符串发送出去，由接收者解码得到一个由冒号分隔的用户名和口令的字符串。</p>
+<p><strong>优点：</strong></p>
+<p>基本上所有流行的网页浏览器都支持基本认证。</p>
+<p><strong>缺点：</strong></p>
+<p>由于用户名和密码都是Base64编码的，而Base64编码是可逆的，所以用户名和密码可以认为是明文。所以只有在客户端和服务器主机之间的连接是安全可信的前提下才可以使用。</p>
+<h4 id="10-1-2-Cookie-Session-Auth"><a href="#10-1-2-Cookie-Session-Auth" class="headerlink" title="10.1.2 Cookie-Session Auth"></a>10.1.2 Cookie-Session Auth</h4><p>Cookie-session 认证机制是通过浏览器带上来Cookie对象来与服务器端的session对象匹配来实现状态管理。</p>
+<p>第一次请求认证在服务端创建一个Session对象，同时在用户的浏览器端创建了一个Cookie对象；当我们关闭浏览器的时候，cookie会被删除。但可以通过修改cookie 的expire time使cookie在一定时间内有效。</p>
+<p><strong>优点：</strong></p>
+<p>相对HTTP Basic Auth更加安全。</p>
+<p><strong>缺点：</strong></p>
+<p>这种基于cookie-session的认证使应用本身很难得到扩展，随着不同客户端用户的增加，独立的服务器已无法承载更多的用户，而这时候基于session认证应用的问题就会暴露出来。</p>
+<h4 id="10-1-3-OAuth"><a href="#10-1-3-OAuth" class="headerlink" title="10.1.3 OAuth"></a>10.1.3 OAuth</h4><p>OAuth 是一个关于授权（authorization）的开放网络标准。允许用户提供一个令牌，而不是用户名和密码来访问他们存放在特定服务提供者的数据。现在的版本是2.0版。</p>
+<p>严格来说，OAuth2不是一个标准协议，而是一个安全的授权框架。它详细描述了系统中不同角色、用户、服务前端应用（比如API），以及客户端（比如网站或移动App）之间怎么实现相互认证。</p>
+<p>OAuth流程如下图：</p>
+<p><img src="https://gcore.jsdelivr.net/gh/huhai-study/picgo-one@main/img/20231007154205.png" alt="20231007154205" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>快速开发，代码量小，维护工作少。</li>
+<li>如果API要被不同的App使用，并且每个App使用的方式也不一样，使用OAuth2是个不错的选择。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<p>OAuth2是一个安全框架，描述了在各种不同场景下，多个应用之间的授权问题。有海量的资料需要学习，要完全理解需要花费大量时间。OAuth2不是一个严格的标准协议，因此在实施过程中更容易出错。</p>
+<h4 id="10-1-4-Token-Auth"><a href="#10-1-4-Token-Auth" class="headerlink" title="10.1.4 Token Auth"></a>10.1.4 Token Auth</h4><p>基于token的认证鉴权机制类似于http协议，也是无状态的。这种方式不需要在服务端去保留用户的认证信息或者会话信息。这就意味着基于token认证机制的应用不需要去考虑用户在哪一台服务器登录了，这就为应用的扩展提供了便利。</p>
+<p>这个token必须要在每次请求时传递给服务端，它应该保存在请求头中，Token Auth 流程如下图：</p>
+<p><img src="https://gcore.jsdelivr.net/gh/huhai-study/picgo-one@main/img/20231007154222.png" alt="20231007154222" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>支持跨域访问</li>
+<li>Token机制在服务端不需要存储session信息：Token 自身包含了所有登录用户的信息，只需要在客户端的cookie或本地介质存储状态信息</li>
+<li>去耦：不需要绑定到一个特定的身份验证方案。Token可以在任何地方生成，只要在你的API被调用的时候，你可以进行Token生成调用即可</li>
+<li>更适用于移动应用：Cookie是不被客户端（iOS, Android，Windows 8等）支持的。</li>
+<li>基于标准化：<br>API可以采用标准化的 JSON Web Token (JWT)。这个标准已经存在多个后端库（.NET, Ruby, Java,Python, PHP）和多家公司的支持（如：Firebase,Google, Microsoft）</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>占带宽<br>正常情况下要比 session_id 更大，需要消耗更多流量，挤占更多带宽，假如你的网站每月有 10 万次的浏览器，就意味着要多开销几十兆的流量。听起来并不多，但日积月累也是不小一笔开销。实际上，许多人会在 JWT 中存储的信息会更多</li>
+<li>无法在服务端注销，因为服务端是无状态的，并没有保存客户端用户登录信息</li>
+<li>对于有着严格性能要求的 Web 应用并不理想，尤其对于单线程环境</li>
+</ul>
+<h3 id="10-2-JWT"><a href="#10-2-JWT" class="headerlink" title="10.2 JWT"></a>10.2 JWT</h3><h4 id="10-2-1-JWT介绍"><a href="#10-2-1-JWT介绍" class="headerlink" title="10.2.1 JWT介绍"></a>10.2.1 JWT介绍</h4><p>JWT全称为JSON Web Token，是目前最流行的跨域身份验证解决方案。JWT是为了在网络应用环境间传递声明而制定的一种基于JSON的开放标准。</p>
+<p>JWT特别适用于分布式站点的单点登录（SSO）场景。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可被加密。</p>
+<h4 id="10-2-2-JWT的数据结构"><a href="#10-2-2-JWT的数据结构" class="headerlink" title="10.2.2 JWT的数据结构"></a>10.2.2 JWT的数据结构</h4><p>JWT其实就是一个很长的字符串，字符之间通过”.”分隔符分为三个子串，各字串之间没有换行符。每一个子串表示了一个功能块，总共有三个部分：**JWT头(header)<strong>、</strong>有效载荷(payload)<strong>、</strong>签名(signature)**，如下图所示：</p>
+<p><img src="https://gcore.jsdelivr.net/gh/huhai-study/picgo-one@main/img/20231007154246.png" alt="20231007154246" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<h5 id="10-2-2-1-JWT头"><a href="#10-2-2-1-JWT头" class="headerlink" title="10.2.2.1 JWT头"></a>10.2.2.1 JWT头</h5><p>JWT头是一个描述JWT元数据的JSON对象，通常如下所示：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;alg&quot;</span><span class="punctuation">:</span> <span class="string">&quot;HS256&quot;</span><span class="punctuation">,</span><span class="attr">&quot;typ&quot;</span><span class="punctuation">:</span> <span class="string">&quot;JWT&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>alg：表示签名使用的算法，默认为HMAC SHA256（写为HS256）</p>
+<p>typ：表示令牌的类型，JWT令牌统一写为JWT</p>
+<p>最后，使用Base64 URL算法将上述JSON对象转换为字符串</p>
+<h5 id="10-2-2-2-有效载荷"><a href="#10-2-2-2-有效载荷" class="headerlink" title="10.2.2.2 有效载荷"></a>10.2.2.2 有效载荷</h5><p>有效载荷，是JWT的主体内容部分，也是一个JSON对象，包含需要传递的数据。 </p>
+<p>有效载荷部分规定有如下七个默认字段供选择：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">iss：发行人</span><br><span class="line">exp：到期时间</span><br><span class="line">sub：主题</span><br><span class="line">aud：用户</span><br><span class="line">nbf：在此之前不可用</span><br><span class="line">iat：发布时间</span><br><span class="line">jti：JWT ID用于标识该JWT</span><br></pre></td></tr></table></figure>
+
+<p>除以上默认字段外，还可以自定义私有字段。</p>
+<p>最后，同样使用Base64 URL算法将有效载荷部分JSON对象转换为字符串</p>
+<h5 id="10-2-2-3-签名"><a href="#10-2-2-3-签名" class="headerlink" title="10.2.2.3 签名"></a>10.2.2.3 签名</h5><p>签名实际上是一个加密的过程，是对上面两部分数据通过指定的算法生成哈希，以确保数据不会被篡改。</p>
+<p>首先需要指定一个密码（secret），该密码仅仅保存在服务器中，并且不能向用户公开。然后使用JWT头中指定的签名算法（默认情况下为HMAC SHA256），根据以下公式生成签名哈希：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(base64UrlEncode(header) + <span class="string">&quot;.&quot;</span> + base64UrlEncode(payload),secret)</span><br></pre></td></tr></table></figure>
+
+<p>在计算出签名哈希后，JWT头，有效载荷和签名哈希的三个部分组合成一个字符串，每个部分用”.”分隔，就构成整个JWT对象。</p>
+<h4 id="10-2-3-JWT签名算法"><a href="#10-2-3-JWT签名算法" class="headerlink" title="10.2.3 JWT签名算法"></a>10.2.3 JWT签名算法</h4><p>JWT签名算法中，一般有两个选择：HS256和RS256。</p>
+<p>HS256 (带有 SHA-256 的 HMAC )是一种对称加密算法, 双方之间仅共享一个密钥。由于使用相同的密钥生成签名和验证签名, 因此必须注意确保密钥不被泄密。</p>
+<p>RS256 (采用SHA-256 的 RSA 签名) 是一种非对称加密算法, 它使用公共&#x2F;私钥对: JWT的提供方采用私钥生成签名, JWT 的使用方获取公钥以验证签名。</p>
+<h4 id="10-2-4-jjwt介绍"><a href="#10-2-4-jjwt介绍" class="headerlink" title="10.2.4 jjwt介绍"></a>10.2.4 jjwt介绍</h4><p>jjwt是一个提供JWT创建和验证的Java库。永远免费和开源(Apache License，版本2.0)，JJWT很容易使用和理解。</p>
+<p>jjwt的maven坐标：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.jsonwebtoken<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jjwt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.9.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="10-4-jwt入门案例"><a href="#10-4-jwt入门案例" class="headerlink" title="10.4 jwt入门案例"></a>10.4 jwt入门案例</h3><p>本案例中会通过jjwt来生成和解析JWT令牌。</p>
+<p>第一步：创建maven工程jwt_demo并配置pom.xml文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 </span></span></span><br><span class="line"><span class="string"><span class="tag">                             http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.itcast<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jwt_demo<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.jsonwebtoken<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jjwt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.9.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.hutool<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hutool-all<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>第二步：编写单元测试</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.itcast.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.hutool.core.io.FileUtil;</span><br><span class="line"><span class="keyword">import</span> io.jsonwebtoken.*;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> java.io.DataInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.security.*;</span><br><span class="line"><span class="keyword">import</span> java.security.spec.PKCS8EncodedKeySpec;</span><br><span class="line"><span class="keyword">import</span> java.security.spec.X509EncodedKeySpec;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JwtTest</span> &#123;</span><br><span class="line">    <span class="comment">//生成jwt，不使用签名</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test1</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//用于封装jwt的header部分，添加构成JWT的参数</span></span><br><span class="line">        Map&lt;String, Object&gt; headMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">        headMap.put(<span class="string">&quot;alg&quot;</span>, <span class="string">&quot;none&quot;</span>);<span class="comment">//不使用签名算法</span></span><br><span class="line">        headMap.put(<span class="string">&quot;typ&quot;</span>, <span class="string">&quot;JWT&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//用于封装jwt的body部分</span></span><br><span class="line">        <span class="type">Map</span> <span class="variable">body</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">        body.put(<span class="string">&quot;userId&quot;</span>,<span class="string">&quot;1&quot;</span>);</span><br><span class="line">        body.put(<span class="string">&quot;username&quot;</span>,<span class="string">&quot;xiaoming&quot;</span>);</span><br><span class="line">        body.put(<span class="string">&quot;role&quot;</span>,<span class="string">&quot;admin&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//使用jjwt提供的API生成jwt令牌</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">jwt</span> <span class="operator">=</span> Jwts.builder()</span><br><span class="line">                .setHeader(headMap)</span><br><span class="line">                .setClaims(body)</span><br><span class="line">                .setId(<span class="string">&quot;jwt001&quot;</span>)</span><br><span class="line">                .compact();</span><br><span class="line">        System.out.println(jwt);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//使用jjwt提供的API解析jwt</span></span><br><span class="line">        <span class="type">Jwt</span> <span class="variable">result</span> <span class="operator">=</span> Jwts.parser().parse(jwt);</span><br><span class="line">        <span class="type">Object</span> <span class="variable">jwtBody</span> <span class="operator">=</span> result.getBody();</span><br><span class="line">        <span class="type">Header</span> <span class="variable">header</span> <span class="operator">=</span> result.getHeader();</span><br><span class="line"></span><br><span class="line">        System.out.println(result);</span><br><span class="line">        System.out.println(jwtBody);</span><br><span class="line">        System.out.println(header);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//生成jwt时使用签名算法生成签名部分----基于HS256签名算法</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test2</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//添加构成JWT的参数</span></span><br><span class="line">        Map&lt;String, Object&gt; headMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">        headMap.put(<span class="string">&quot;alg&quot;</span>, SignatureAlgorithm.HS256.getValue());<span class="comment">//使用HS256签名算法</span></span><br><span class="line">        headMap.put(<span class="string">&quot;typ&quot;</span>, <span class="string">&quot;JWT&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">Map</span> <span class="variable">body</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">        body.put(<span class="string">&quot;userId&quot;</span>,<span class="string">&quot;1&quot;</span>);</span><br><span class="line">        body.put(<span class="string">&quot;username&quot;</span>,<span class="string">&quot;xiaoming&quot;</span>);</span><br><span class="line">        body.put(<span class="string">&quot;role&quot;</span>,<span class="string">&quot;admin&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">jwt</span> <span class="operator">=</span> Jwts.builder()</span><br><span class="line">                        .setHeader(headMap)</span><br><span class="line">                        .setClaims(body)</span><br><span class="line">                        .setId(<span class="string">&quot;jwt001&quot;</span>)</span><br><span class="line">            			.signWith(SignatureAlgorithm.HS256,<span class="string">&quot;itcast&quot;</span>)</span><br><span class="line">            			.compact();</span><br><span class="line">        System.out.println(jwt);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//解析jwt</span></span><br><span class="line">        <span class="type">Jwt</span> <span class="variable">result</span> <span class="operator">=</span> Jwts.parser().setSigningKey(<span class="string">&quot;itcast&quot;</span>).parse(jwt);</span><br><span class="line">        <span class="type">Object</span> <span class="variable">jwtBody</span> <span class="operator">=</span> result.getBody();</span><br><span class="line">        <span class="type">Header</span> <span class="variable">header</span> <span class="operator">=</span> result.getHeader();</span><br><span class="line"></span><br><span class="line">        System.out.println(result);</span><br><span class="line">        System.out.println(jwtBody);</span><br><span class="line">        System.out.println(header);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//生成jwt时使用签名算法生成签名部分----基于RS256签名算法</span></span><br><span class="line">    <span class="comment">//生成jwt令牌时使用密钥，解析jwt令牌时使用公钥</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test3</span><span class="params">()</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="comment">//添加构成JWT的参数</span></span><br><span class="line">        Map&lt;String, Object&gt; headMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">        headMap.put(<span class="string">&quot;alg&quot;</span>, SignatureAlgorithm.RS256.getValue());<span class="comment">//使用RS256签名算法</span></span><br><span class="line">        headMap.put(<span class="string">&quot;typ&quot;</span>, <span class="string">&quot;JWT&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">Map</span> <span class="variable">body</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">        body.put(<span class="string">&quot;userId&quot;</span>,<span class="string">&quot;1&quot;</span>);</span><br><span class="line">        body.put(<span class="string">&quot;username&quot;</span>,<span class="string">&quot;xiaoming&quot;</span>);</span><br><span class="line">        body.put(<span class="string">&quot;role&quot;</span>,<span class="string">&quot;admin&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">jwt</span> <span class="operator">=</span> Jwts.builder()</span><br><span class="line">                .setHeader(headMap)</span><br><span class="line">                .setClaims(body)</span><br><span class="line">                .setId(<span class="string">&quot;jwt001&quot;</span>)</span><br><span class="line">                .signWith(SignatureAlgorithm.RS256,getPriKey())</span><br><span class="line">                .compact();</span><br><span class="line">        System.out.println(jwt);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//解析jwt</span></span><br><span class="line">        <span class="type">Jwt</span> <span class="variable">result</span> <span class="operator">=</span> Jwts.parser().setSigningKey(getPubKey()).parse(jwt);</span><br><span class="line">        <span class="type">Object</span> <span class="variable">jwtBody</span> <span class="operator">=</span> result.getBody();</span><br><span class="line">        <span class="type">Header</span> <span class="variable">header</span> <span class="operator">=</span> result.getHeader();</span><br><span class="line"></span><br><span class="line">        System.out.println(result);</span><br><span class="line">        System.out.println(jwtBody);</span><br><span class="line">        System.out.println(header);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//需要将生成的秘钥放入到resources下才能获取秘钥</span></span><br><span class="line">    <span class="keyword">public</span> PrivateKey <span class="title function_">getPriKey</span><span class="params">()</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="type">InputStream</span> <span class="variable">resourceAsStream</span> <span class="operator">=</span> </span><br><span class="line">            <span class="built_in">this</span>.getClass().getClassLoader().getResourceAsStream(<span class="string">&quot;pri.key&quot;</span>);</span><br><span class="line">        <span class="type">DataInputStream</span> <span class="variable">dis</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DataInputStream</span>(resourceAsStream);</span><br><span class="line">        <span class="type">byte</span>[] keyBytes = <span class="keyword">new</span> <span class="title class_">byte</span>[resourceAsStream.available()];</span><br><span class="line">        dis.readFully(keyBytes);</span><br><span class="line">        <span class="type">PKCS8EncodedKeySpec</span> <span class="variable">spec</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PKCS8EncodedKeySpec</span>(keyBytes);</span><br><span class="line">        <span class="type">KeyFactory</span> <span class="variable">kf</span> <span class="operator">=</span> KeyFactory.getInstance(<span class="string">&quot;RSA&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> kf.generatePrivate(spec);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//需要将生成的公钥放入到resources下才能获取公钥</span></span><br><span class="line">    <span class="keyword">public</span> PublicKey <span class="title function_">getPubKey</span><span class="params">()</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="type">InputStream</span> <span class="variable">resourceAsStream</span> <span class="operator">=</span> </span><br><span class="line">            <span class="built_in">this</span>.getClass().getClassLoader().getResourceAsStream(<span class="string">&quot;pub.key&quot;</span>);</span><br><span class="line">        <span class="type">DataInputStream</span> <span class="variable">dis</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DataInputStream</span>(resourceAsStream);</span><br><span class="line">        <span class="type">byte</span>[] keyBytes = <span class="keyword">new</span> <span class="title class_">byte</span>[resourceAsStream.available()];</span><br><span class="line">        dis.readFully(keyBytes);</span><br><span class="line">        <span class="type">X509EncodedKeySpec</span> <span class="variable">spec</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">X509EncodedKeySpec</span>(keyBytes);</span><br><span class="line">        <span class="type">KeyFactory</span> <span class="variable">kf</span> <span class="operator">=</span> KeyFactory.getInstance(<span class="string">&quot;RSA&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> kf.generatePublic(spec);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//生成自己的秘钥/公钥对，,需要将生成的公钥和密钥需要拷贝到resources下才能获取到公钥和密钥</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test4</span><span class="params">()</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="comment">//自定义 随机密码,  请修改这里</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">password</span> <span class="operator">=</span> <span class="string">&quot;itcast&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">KeyPairGenerator</span> <span class="variable">keyPairGenerator</span> <span class="operator">=</span> KeyPairGenerator.getInstance(<span class="string">&quot;RSA&quot;</span>);</span><br><span class="line">        <span class="type">SecureRandom</span> <span class="variable">secureRandom</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SecureRandom</span>(password.getBytes());</span><br><span class="line">        keyPairGenerator.initialize(<span class="number">1024</span>, secureRandom);</span><br><span class="line">        <span class="type">KeyPair</span> <span class="variable">keyPair</span> <span class="operator">=</span> keyPairGenerator.genKeyPair();</span><br><span class="line"></span><br><span class="line">        <span class="type">byte</span>[] publicKeyBytes = keyPair.getPublic().getEncoded();</span><br><span class="line">        <span class="type">byte</span>[] privateKeyBytes = keyPair.getPrivate().getEncoded();</span><br><span class="line"></span><br><span class="line">        FileUtil.writeBytes(publicKeyBytes, <span class="string">&quot;d:\\pub.key&quot;</span>);</span><br><span class="line">        FileUtil.writeBytes(privateKeyBytes, <span class="string">&quot;d:\\pri.key&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-5-pd-tools-jwt使用"><a href="#10-5-pd-tools-jwt使用" class="headerlink" title="10.5 pd-tools-jwt使用"></a>10.5 pd-tools-jwt使用</h3><p>pd-tools-jwt底层是基于jjwt进行jwt令牌的生成和解析的。为了方便使用，在pd-tools-jwt模块中封装了两个工具类：JwtTokenServerUtils和JwtTokenClientUtils。</p>
+<p>JwtTokenServerUtils主要是提供给权限服务的，类中包含生成jwt和解析jwt两个方法</p>
+<p>JwtTokenClientUtils主要是提供给网关服务的，类中只有一个解析jwt的方法</p>
+<p>需要注意的是pd-tools-jwt并不是starter，所以如果只是在项目中引入他的maven坐标并不能直接使用其提供的工具类。需要在启动类上加入pd-tools-jwt模块中定义的注解@EnableAuthServer或者@EnableAuthClient。</p>
+<p>pd-tools-jwt使用的签名算法为RS256，需要我们自己的应用来提供一对公钥和私钥，然后在application.yml中进行配置即可。</p>
+<p><strong>具体使用过程：</strong></p>
+<p>第一步：创建maven工程myJwtApp并配置pom.xml文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 </span></span></span><br><span class="line"><span class="string"><span class="tag">                             http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.itheima<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>myJwtApp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.itheima<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>pd-tools-jwt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>第二步：创建resources&#x2F;keys目录，将通过RSA算法生成的公钥和私钥复制到此目录下</p>
+<p><img src="https://gcore.jsdelivr.net/gh/huhai-study/picgo-one@main/img/20231007165902.png" alt="20231007165902" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>第三步： 创建application.yml文件</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8080</span></span><br><span class="line"><span class="comment"># JWT相关配置</span></span><br><span class="line"><span class="attr">authentication:</span></span><br><span class="line">  <span class="attr">user:</span></span><br><span class="line">    <span class="attr">expire:</span> <span class="number">3600</span> <span class="comment">#令牌失效时间</span></span><br><span class="line">    <span class="attr">priKey:</span> <span class="string">keys/pri.key</span> <span class="comment">#私钥</span></span><br><span class="line">    <span class="attr">pubKey:</span> <span class="string">keys/pub.key</span> <span class="comment">#公钥</span></span><br></pre></td></tr></table></figure>
+
+<p>第四步：创建UserController</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.itheima.pinda.auth.server.utils.JwtTokenServerUtils;</span><br><span class="line"><span class="keyword">import</span> com.itheima.pinda.auth.utils.JwtUserInfo;</span><br><span class="line"><span class="keyword">import</span> com.itheima.pinda.auth.utils.Token;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserController</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JwtTokenServerUtils jwtTokenServerUtils;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//用户登录功能，如果登录成功则签发jwt令牌给客户端</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/login&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Token <span class="title function_">login</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">userName</span> <span class="operator">=</span> <span class="string">&quot;admin&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">password</span> <span class="operator">=</span> <span class="string">&quot;admin123&quot;</span>;</span><br><span class="line">        <span class="comment">//查询数据库进行用户名密码校验...</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果校验通过，则为客户端生成jwt令牌</span></span><br><span class="line">        <span class="type">JwtUserInfo</span> <span class="variable">jwtUserInfo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JwtUserInfo</span>();</span><br><span class="line">        jwtUserInfo.setName(userName);</span><br><span class="line">        jwtUserInfo.setOrgId(<span class="number">10L</span>);</span><br><span class="line">        jwtUserInfo.setUserId(<span class="number">1L</span>);</span><br><span class="line">        jwtUserInfo.setAccount(userName);</span><br><span class="line">        jwtUserInfo.setStationId(<span class="number">20L</span>);</span><br><span class="line">        <span class="type">Token</span> <span class="variable">token</span> <span class="operator">=</span> jwtTokenServerUtils.generateUserToken(jwtUserInfo, <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//实际应该是在过滤器中进行jwt令牌的解析</span></span><br><span class="line">        <span class="type">JwtUserInfo</span> <span class="variable">userInfo</span> <span class="operator">=</span> jwtTokenServerUtils.getUserInfo(token.getToken());</span><br><span class="line">        System.out.println(userInfo);</span><br><span class="line">        <span class="keyword">return</span> token;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第五步：创建启动类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.itheima.pinda.auth.server.EnableAuthServer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableAuthServer</span> <span class="comment">//启用jwt服务端认证功能</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyJwtApplication</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(MyJwtApplication.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动项目，访问地址：<a target="_blank" rel="noopener" href="http://localhost:8080/user/login">http://localhost:8080/user/login</a></p>
+<p><img src="https://gcore.jsdelivr.net/gh/huhai-study/picgo-one@main/img/20231007165925.png" alt="20231007165925" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>可以看到jwt令牌已经生成了。</p>
+
+</article>
+    
+    
+
+</div>
+<div id="post-next-prev" class="row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            Other Articles
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2023/10/06/LogBack%E7%9A%84%E4%BD%BF%E7%94%A8/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="https://gcore.jsdelivr.net/gh/huhai-study/picgo-one@main/img/20231006105537.png">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/%E5%AD%A6%E4%B9%A0/">
+                    学习
+                </a>
+            </div>
+            <h5>
+                <a href="/2023/10/06/LogBack%E7%9A%84%E4%BD%BF%E7%94%A8/" class="trm-anima-link">
+                    LogBack的使用
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>23/10/06</li>
+                <li>10:53</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation" data-scroll data-scroll-offset="50">
+
+    
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> v6.3.0
+            </span>
+            <span class="footer-separator" data-separator=" | "></span>
+            <span> 
+                Theme - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                v2.0.9
+            </span>
+        </div>
+      
+
+     
+
+     
+</footer>
+ 
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            <div class="trm-fixed-container" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="-10">
+    
+        <div class="trm-fixed-btn" data-title="Read Mode" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="Back To Top">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+          </div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.0.9"></script>
+
+</body>
+
+</html>
